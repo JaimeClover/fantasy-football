@@ -32,14 +32,15 @@ getRankings2 <- function(){
     final$bye <- table2$Bye
     final$pos <- sub("[0-9]+", "", table2$PosRank)
     names(table) <- tolower(names(table))
-    names(table)[11] <- "rushTD"
-    names(table)[14] <- "recTD"
+    names(table)[11] <- "rush TD"
+    names(table)[14] <- "rec TD"
     final <- final[!(final$player %in% table$player),]
     for (name in names(table)[6:16]){
         final[[name]] <- NA
     }
     output <- rbind(table, final)
     output$status <- "Available"
+    output$rk <- 1:nrow(output)
     rownames(output) <- NULL
     output
 }

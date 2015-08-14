@@ -36,7 +36,7 @@ shinyServer(
                        grepl(tolower(input$search), tolower(players$team)))
             }
         })
-        output$myteam <- renderTable({
+        output$myteam <- renderDataTable({
             newstat <- newstatus()
             if (newstat %in% c("My Team", "Drafted")){
                 filt <- "Available"
@@ -50,9 +50,13 @@ shinyServer(
                                   choices = players$player[players$status %in% filt &
                                                            (players$pos %in% strsplit(input$position, '/')[[1]] |
                                                             input$position == "ALL") & searchavailable()]))
-            data[,2:16]
-        })
-        output$otherteams <- renderTable({
+            data[,-ncol(data)]
+        }, 
+        options = list(
+            paging = FALSE,
+            searching = FALSE
+        ))
+        output$otherteams <- renderDataTable({
             newstat <- newstatus()
             if (newstat %in% c("My Team", "Drafted")){
                 filt <- "Available"
@@ -66,9 +70,14 @@ shinyServer(
                                       choices = players$player[players$status %in% filt &
                                                                (players$pos %in% strsplit(input$position, '/')[[1]] |
                                                                 input$position == "ALL")  & searchavailable()]))
-            data[,2:16]
-        })
-        output$available <- renderTable({
+            data[,-ncol(data)]
+        }, 
+        options = list(
+            lengthMenu = list(c(10, 25, 50, 100, -1), c('10', '25', '50', '100', 'All')),
+            pageLength = 25,
+            searching = FALSE
+        ))
+        output$available <- renderDataTable({
             newstat <- newstatus()
             if (newstat %in% c("My Team", "Drafted")){
                 filt <- "Available"
@@ -82,8 +91,13 @@ shinyServer(
                                       choices = players$player[players$status %in% filt &
                                                                (players$pos %in% strsplit(input$position, '/')[[1]] |
                                                                 input$position == "ALL")  & searchavailable()]))
-            data[,2:16]
-        })
+            data[,-ncol(data)]
+        }, 
+        options = list(
+            lengthMenu = list(c(10, 25, 50, 100, -1), c('10', '25', '50', '100', 'All')),
+            pageLength = 25,
+            searching = FALSE
+        ))
         output$documentation <- renderText({
             newstat <- newstatus()
             if (newstat %in% c("My Team", "Drafted")){
