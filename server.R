@@ -2,7 +2,6 @@ library(shiny)
 
 players <- readRDS('data/players.RDS')
 
-# Define server logic required to draw a histogram
 shinyServer(
     function(input, output, session) {
         newstatus <- reactive({
@@ -77,6 +76,7 @@ shinyServer(
             pageLength = 25,
             searching = FALSE
         ))
+       
         output$available <- renderDataTable({
             newstat <- newstatus()
             if (newstat %in% c("My Team", "Drafted")){
@@ -91,13 +91,15 @@ shinyServer(
                                       choices = players$player[players$status %in% filt &
                                                                (players$pos %in% strsplit(input$position, '/')[[1]] |
                                                                 input$position == "ALL")  & searchavailable()]))
+            
             data[,-ncol(data)]
         }, 
-        options = list(
-            lengthMenu = list(c(10, 25, 50, 100, -1), c('10', '25', '50', '100', 'All')),
-            pageLength = 25,
-            searching = FALSE
-        ))
+            options = list(
+                lengthMenu = list(c(10, 25, 50, 100, -1), c('10', '25', '50', '100', 'All')),
+                pageLength = 25,
+                searching = FALSE
+            )
+        )
         output$documentation <- renderText({
             newstat <- newstatus()
             if (newstat %in% c("My Team", "Drafted")){
@@ -119,6 +121,7 @@ shinyServer(
                 "status: waiting for next pick..."
             }
         })
+        
         output$message <- renderText({
             selected()
         })
