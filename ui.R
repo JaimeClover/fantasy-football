@@ -15,7 +15,7 @@ shinyUI(fluidPage(
                                         "Undraft (return to draft pool)")),
             selectInput("selectedPlayer", label = "Choose a player",
                          choices = NULL, selectize=FALSE, size=10),
-            p(em('player rankings updated 8/13/15')),
+            p(em('player rankings updated 8/15/15. (source: fantasydata.com and ESPN.com)')),
             downloadButton('downloadData', 'Download My Team'),
             br(), br(),
             div(textOutput("message"), style = "color:red"),
@@ -26,8 +26,8 @@ shinyUI(fluidPage(
                 tabPanel("My Team", dataTableOutput("myteam")),
                 tabPanel("Other Teams", dataTableOutput("otherteams")),
                 tabPanel("Available", dataTableOutput("available")),
-                tabPanel("Documentation",
-                    h2("Introduction", textOutput("documentation")),
+                tabPanel("Help",
+                    h2("Welcome!", textOutput("documentation")),
                     p("The purpose of this app is to help you keep track of the best available players
                       during your offline fantasy football draft by allowing you to sort and search
                       the top players and remove them from the board when they are drafted."), hr(),
@@ -37,7 +37,7 @@ shinyUI(fluidPage(
                       information about players such as their overall rank, bye week, projected stats,
                       and average draft position (adp)."), hr(),
                     h2("Updating The Draft Board"),
-                    p("Following the instructions below, use the panel on the left to find players
+                    p("Use the panel on the left to find players
                       and add them to your team or an opponent's team as they are drafted."),
                     h3("Select Position"),
                     p("Select a position to filter by (or use 'ALL' to view all players)."),
@@ -61,7 +61,7 @@ shinyUI(fluidPage(
                       your computer. This is a .csv file for viewing in a spreadsheet program."), hr(), br()
                 ),
                 id = "tabby",
-                selected = "Documentation"
+                selected = "Help"
             ),
             width = 9
         )

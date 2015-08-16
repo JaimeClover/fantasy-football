@@ -1,9 +1,8 @@
 library(shiny)
 
-players <- readRDS('data/players.RDS')
-
 shinyServer(
     function(input, output, session) {
+        players <- readRDS('data/players.RDS')
         newstatus <- reactive({
             if (input$type == "Draft To My Team") {
                 return("My Team")
@@ -83,6 +82,8 @@ shinyServer(
                 filt <- "Available"
             } else if (newstat == "Available") {
                 filt <- c("My Team", "Drafted")
+            } else {
+                filt <- "Available"
             }
             players[players$player == input$selectedPlayer, "status"] <<- newstatus()
             data <- subset(players, status == "Available" & (pos %in% strsplit(input$position, '/')[[1]] |
