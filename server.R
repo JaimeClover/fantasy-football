@@ -131,7 +131,7 @@ shinyServer(
                 "my-fantasy-team-2015.csv"
             },
             content = function(file) {
-                write.csv(players[players$status == 'My Team', 1:6], file, row.names = FALSE)
+                write.csv(players[players$status == 'My Team', -ncol(players)], file, row.names = FALSE)
             }
         )
     }
